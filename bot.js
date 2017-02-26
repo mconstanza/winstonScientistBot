@@ -25,7 +25,6 @@ const reddit = new snoowrap({
 
 getNewComments = (sub = 'Overwatch') => {
     reddit.getSubreddit(sub).getNewComments().then(function(listing) {
-        console.log(listing)
         for (var i = 0; i < listing.length; i++) {
             var comment = listing[i];
 
@@ -74,4 +73,4 @@ commentRepliedTo = (comment) => {
 // // Set how often the bot will run in milliseconds. Be careful not to set it for too frequently!
 // // This one is set for an hour
 getNewComments();
-setInterval(getNewComments, 60000);
+setInterval(getNewComments, 10000);
