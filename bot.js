@@ -78,4 +78,4 @@ commentRepliedTo = (comment) => {
 // // Set how often the bot will run in milliseconds. Be careful not to set it for too frequently!
 // // This one is set for an hour
 getNewComments();
-setInterval(getNewComments, 10000);
+setInterval(getNewComments, 15000);
