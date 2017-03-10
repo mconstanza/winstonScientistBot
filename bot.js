@@ -25,11 +25,16 @@ const reddit = new snoowrap({
 
 getNewComments = (sub = 'Overwatch') => {
     reddit.getSubreddit(sub).getNewComments().then(function(listing) {
+        console.log("\n")
         for (var i = 0; i < listing.length; i++) {
             var comment = listing[i];
+            console.log(comment.author);
 
-            if (!commentRepliedTo(comment)) {
+            if (!commentRepliedTo(comment) && comment.author.name != "winstonScientistBot2" ) {
                 harambeMentioned(comment);
+            }
+            else if (comment.author.name == "winstonScientistBot2"){
+              console.log("\nINFINITE LOOP!!", comment.body)
             }
         }
     })
@@ -38,24 +43,24 @@ getNewComments = (sub = 'Overwatch') => {
 harambeMentioned = (comment) => {
     var searchTerms = /gorilla|harambe|monkey|primate/i;
     if (searchTerms.test(comment.body)) {
-        console.log('\nMonkey Business:', comment.body)
+        // console.log('\nMonkey Business:', comment.body)
         var insult = searchTerms.exec(comment.body)
         commentReply(comment, insult)
     } else {
-        console.log('\nNo monkeys :(')
+        // console.log('\nNo monkeys :(')
     }
 }
 
 commentReply = (comment, insult) => {
     reddit.getComment(comment.id)
-    .reply('He is *not* a ' + insult + ". He's a *scientist*." + "\n - /u/winstonScientistBot")
+    .reply('He is *not* a ' + insult + ". He's a *scientist*." + "\n - /u/winstonScientistBot2  ")
 
     // write the comment id to file so that we know it was replied to already
     fs.appendFile("./comments_replied_to.txt", comment.id + "\n", 'utf8', function(err) {
         if (err) {
             return console.log(err);
         }
-        console.log("Replied to comment:", comment.id)
+        console.log("Replied to comment:", comment.id, comment.body)
     })
 }
 
